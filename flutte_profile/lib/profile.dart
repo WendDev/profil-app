@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class userprofile extends StatelessWidget {
@@ -9,14 +8,21 @@ class userprofile extends StatelessWidget {
     MenuRowData(Icons.folder, 'Archive'),
   ];
 
-
   final List<MenuRowData> menurow2 = [
     MenuRowData(Icons.newspaper, 'What news?'),
     MenuRowData(Icons.security, 'Security'),
     MenuRowData(Icons.storage, 'Storage'),
     MenuRowData(Icons.language, 'language'),
     MenuRowData(Icons.notifications_active, 'Notifications'),
+  ];
 
+  final List<MenuRowData> menurow3 = [
+    MenuRowData(Icons.android, 'Android devices'),
+  ];
+
+  final List<MenuRowData> menurow4 = [
+    MenuRowData(Icons.help, 'Help'),
+    MenuRowData(Icons.chat, 'Questetions to Telegram'),
   ];
 
   userprofile({super.key});
@@ -25,32 +31,42 @@ class userprofile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
         title: Text(
           tit,
           style: const TextStyle(fontFamily: 'Times new Roman', fontSize: 37),
         ),
         centerTitle: true,
       ),
-      body: Container(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Userinfo(),
-            SizedBox(
-              height: 30,
-            ),
-            MenuWidgets(
-              menurow: menurow1,
-            ),
-            SizedBox(height: 30,),
-             MenuWidgets(menurow: menurow2)
-          ]
+      body: ListView(physics: BouncingScrollPhysics(), children: [
+        Container(
+          width: double.infinity,
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Userinfo(),
+                SizedBox(
+                  height: 30,
+                ),
+                MenuWidgets(
+                  menurow: menurow1,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                MenuWidgets(menurow: menurow2),
+                SizedBox(
+                  height: 60,
+                ),
+                MenuWidgets(menurow: menurow3),
+                SizedBox(
+                  height: 60,
+                ),
+                MenuWidgets(menurow: menurow4)
+              ]),
         ),
-      ),
+      ]),
     );
   }
 }
@@ -60,25 +76,34 @@ class Userinfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      width: double.infinity,
-      child: const Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(height: 10),
-          Avatar(),
-          SizedBox(
-            height: 5,
+    return Stack(
+      children: [
+        Container(
+          color: Colors.white,
+          width: double.infinity,
+          child: const Column(
+            children: [
+              SizedBox(height: 10),
+              Avatar(),
+              SizedBox(
+                height: 5,
+              ),
+              Name(),
+              Numberphone(),
+              SizedBox(
+                height: 2,
+              ),
+              login(),
+            ],
           ),
-          Name(),
-          Numberphone(),
-          SizedBox(
-            height: 2,
-          ),
-          login(),
-        ],
-      ),
+        ),
+        const Positioned(
+          right: 50,
+          top: 10,
+          child: Text('Change.',
+              style: TextStyle(color: Colors.blue, fontSize: 15)),
+        )
+      ],
     );
   }
 }
@@ -116,9 +141,6 @@ class MenuRowWidgets extends StatelessWidget {
   }
 }
 
-
-
-
 class MenuRowData {
   final IconData icon;
   final String info;
@@ -128,7 +150,7 @@ class MenuRowData {
 
 class MenuWidgets extends StatelessWidget {
   final List<MenuRowData> menurow;
-   MenuWidgets({super.key, required this.menurow});
+  MenuWidgets({super.key, required this.menurow});
 
   @override
   Widget build(BuildContext context) {
@@ -136,10 +158,7 @@ class MenuWidgets extends StatelessWidget {
       width: double.infinity,
       color: Colors.white,
       child: Column(
-        children: menurow.map((data) => MenuRowWidgets(data: data )).toList(),
-        
-          
-        
+        children: menurow.map((data) => MenuRowWidgets(data: data)).toList(),
       ),
     );
   }
